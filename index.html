@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diário de Trekking</title>
+
+<style>
+
+/* ===========================
+   FONTES
+=========================== */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Italiana&display=swap');
+
+/* ===========================
+   RESET
+=========================== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html {
+    scroll-behavior: smooth; /* scroll suave */
+}
+
+body{
+    background:#4f5b37;
+    font-family:"Playfair Display", serif;
+    overflow-x:hidden;
+}
+
+/* ===========================
+   MENU SUPERIOR
+=========================== */
+nav{
+    width:100%;
+    padding:20px 40px;
+    background:#3a4628;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:10;
+    border-bottom:4px solid #252d1d;
+}
+
+nav h1{
+    font-family:'Italiana', serif;
+    font-size:32px;
+    color:#ffca60;
+    letter-spacing:2px;
+}
+
+nav ul{
+    display:flex;
+    gap:30px;
+    list-style:none;
+}
+
+nav ul li a{
+    color:#fff;
+    font-size:20px;
+    text-decoration:none;
+    transition:0.3s;
+    padding:5px 10px;
+    border-radius:6px;
+}
+
+nav ul li a:hover{
+    color:#ffca60;
+    background:rgba(255,255,255,0.1);
+}
+
+/* ===========================
+   HERO SECTION
+=========================== */
+.hero{
+    height:100vh;
+    background: url('./imagem-fundo.jpeg') center center/cover no-repeat;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    padding-top:80px;
+}
+
+.hero h2{
+    font-size:80px;
+    color:#ffdd7a;
+    font-family:'Italiana', serif;
+    text-shadow:0 0 8px #000;
+}
+
+.hero h3{
+    font-size:70px;
+    color:#f0d38e;
+    font-family:'Permanent Marker', cursive;
+    margin-top:-10px;
+    transform:rotate(-2deg);
+    text-shadow:0 0 8px #000;
+}
+
+.hero::after{
+    content:"";
+    width:100%;
+    height:120px;
+    position:absolute;
+    bottom:0;
+    left:0;
+    background:url('https://i.imgur.com/6zo4pLX.png') center/cover no-repeat;
+}
+
+/* ===========================
+   SEÇÃO COM TEXTO MANUSCRITO
+=========================== */
+.section-textura{
+    background:#4f5b37;
+    padding:100px 10%;
+    color:white;
+    font-family:"Permanent Marker";
+    font-size:50px;
+    line-height:1.2;
+    position:relative;
+}
+
+.section-textura img{
+    width:300px;
+    height:300px;
+    object-fit:cover;
+    border-radius:4px;
+    margin:20px;
+}
+
+.section-textura p{
+    color:#ff8f38;
+}
+
+.area-texto-imagem {
+    display: flex;
+    gap: 20px; /* Espaço entre texto e imagem */
+    padding: 20px;
+  }
+  .texto {
+    flex: 2; /* ocupa 2 partes */
+    color: #f3f1de;
+  }
+  .imagem {
+    flex: 1; /* ocupa 1 parte */
+  }
+  .imagem img {
+    width: 100%;
+    border-radius: 8px;
+  }
+
+/* ===========================
+   SEÇÕES GERAIS
+=========================== */
+section{
+    padding:130px 10%;
+}
+
+section h3{
+    font-family:"Italiana", serif;
+    font-size:60px;
+    color:#ffdf90;
+    margin-bottom:20px;
+}
+
+section p{
+    font-size:26px;
+    color:white;
+    max-width:700px;
+    margin-bottom:40px;
+}
+
+/* ===========================
+   CARDS DE DESTINOS
+=========================== */
+.destinos-container{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+    gap:30px;
+}
+
+.card{
+    background:#f9f1dc;
+    color:#3a3a3a;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 4px 12px rgba(0,0,0,.3);
+    position: relative;
+    cursor: pointer;
+    transition: transform .3s ease;
+}
+
+.card:hover {
+    transform: scale(1.03);
+}
+
+.card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.card h4{
+    font-family:"Permanent Marker";
+    padding:20px;
+    font-size:30px;
+    color:#cd6d2b;
+}
+
+.card p{
+    padding:0 20px 20px 20px;
+    color: #3a3a3a;
+    font-size:20px;
+}
+
+/* Hover overlay */
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.0);
+    transition: background .3s ease;
+    z-index: 1;
+}
+
+.card:hover::before {
+    background: rgba(0,0,0,0.45);
+}
+
+/* Mais detalhes ao passar o mouse */
+.card-info-hover {
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    min-height: 150px; /* Aumentado para mais conteúdo */
+    padding: 20px;
+    background: rgba(255, 250, 235, 0.95);
+    color: #3a3a3a;
+    font-size: 18px;
+    font-family: "Playfair Display", serif;
+    transition: all .45s ease;
+    z-index: 2;
+    overflow-y:auto;
+}
+
+.card:hover .card-info-hover {
+    bottom: 0;
+}
+
+/* ===========================
+   QUEM SOMOS - TEXTO E DUAS IMAGENS LADO A LADO
+=========================== */
+.quem-somos-container {
+    display: flex;
+    gap: 40px; /* Espaço entre texto e imagens */
+    align-items: flex-start; /* Alinha topo do texto e imagens */
+    flex-wrap: wrap; /* Para responsividade em telas pequenas */
+}
+
+.quem-somos-texto {
+    flex: 2; /* Texto ocupa mais espaço */
+    color: #f3f1de;
+    font-size: 22px;
+    line-height: 1.6;
+}
+
+.quem-somos-imagens {
+    flex: 1; /* Imagens ocupam menos espaço */
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espaço entre as imagens */
+}
+
+.quem-somos-imagens img {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* ===========================
+   FOOTER
+=========================== */
+footer{
+    background:#3a4628;
+    padding:40px;
+    text-align:center;
+    color:white;
+}
+
+/* ===========================
+   IMAGENS SEÇÕES
+=========================== */
+.section-img {
+    width:100%;
+    max-width:600px;
+    margin-top:30px;
+    border-radius:8px;
+    object-fit:cover;
+}
+
+/* ===========================
+   SIMULAÇÃO DE CARDS PARA REVIEWS/REDES
+=========================== */
+.fake-card {
+    background:#f9f1dc;
+    color:#3a3a3a;
+    border-radius:12px;
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 4px 12px rgba(0,0,0,.3);
+}
+
+/* ===========================
+   NOVO: ESTILOS PARA FORMULÁRIO DE CONTATO
+=========================== */
+.contact-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 30px;
+    background: #3a4628; /* Cor de fundo escura para contraste */
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.5);
+}
+
+.contact-form-container label {
+    display: block;
+    margin-bottom: 8px;
+    color: #ffca60;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.contact-form-container input[type="text"],
+.contact-form-container input[type="email"],
+.contact-form-container textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #5a6b42;
+    border-radius: 6px;
+    background: #4f5b37;
+    color: white;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.contact-form-container textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.contact-form-container button {
+    background: #ffca60;
+    color: #3a4628;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.contact-form-container button:hover {
+    background: #ffdd7a;
+}
+
+/* ===========================
+   NOVO: ESTILOS PARA MELHORIA DA SEÇÃO REVIEWS
+=========================== */
+.review-card {
+    background: #f9f1dc;
+    color: #3a3a3a;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.3);
+    border-left: 5px solid #cd6d2b;
+}
+
+.review-card strong {
+    font-family: "Permanent Marker", cursive;
+    font-size: 24px;
+    color: #3a4628;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.review-card .rating {
+    color: #ffca60;
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+/* ===========================
+   NOVO: MEDIA QUERIES PARA RESPONSIVIDADE (Fase 4)
+=========================== */
+@media (max-width: 768px) {
+    /* Menu */
+    nav {
+        flex-direction: column;
+        padding: 15px 20px;
+        position: static; /* Remove fixed position on small screens */
+        border-bottom: none;
+    }
+
+    nav h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    nav ul {
+        gap: 15px;
+        padding: 0;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    nav ul li a {
+        font-size: 16px;
+        padding: 5px 8px;
+    }
+
+    /* Hero */
+    .hero {
+        height: 60vh;
+        padding-top: 20px;
+    }
+
+    .hero h2 {
+        font-size: 40px;
+    }
+
+    .hero h3 {
+        font-size: 30px;
+        margin-top: 0;
+    }
+
+    .hero::after {
+        height: 60px;
+    }
+
+    /* Seções Gerais */
+    section {
+        padding: 60px 5%;
+    }
+
+    section h3 {
+        font-size: 40px;
+    }
+
+    section p {
+        font-size: 20px;
+    }
+
+    /* Seção Textura */
+    .section-textura {
+        padding: 60px 5%;
+        font-size: 30px;
+    }
+
+    .section-textura img {
+        width: 100%;
+        height: auto;
+        margin: 10px 0;
+    }
+
+    /* Quem Somos */
+    .quem-somos-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .quem-somos-texto {
+        font-size: 18px;
+    }
+
+    .quem-somos-imagens {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .quem-somos-imagens img {
+        width: calc(50% - 10px); /* Duas imagens por linha */
+    }
+
+    .section-img {
+        max-width: 100%;
+    }
+}
+
+</style>
+</head>
+<body>
+
+ <!-- ===========================
+       MENU
+    =========================== -->
+    <nav>
+        <h1>Diário de Trekking</h1>
+        <ul>
+            <li><a href="#quem-somos">Quem Somos</a></li>
+            <li><a href="#destinos">Destinos</a></li>
+            <li><a href="#reviews">Reviews</a></li>
+            <li><a href="#contato">Contato</a></li>
+            <li><a href="#redes">Redes Sociais</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- ===========================
+           HERO
+        =========================== -->
+        <section class="hero">
+            <h2>TENDA DO EXPLORADOR</h2>
+            <h3>Diário de Trekking</h3>
+        </section>
+
+        <!-- ===========================
+           TEXTO MANUSCRITO
+        =========================== -->
+        <div class="section-textura">
+            <p>LET'S GO TO THE MOUNTAINS AND SET UP A TENT!</p>
+            <div style="display:flex;gap:40px;flex-wrap:wrap;margin-top:40px;"> 
+                <img src="imagem.jfif" alt="Pessoa acampando em montanha"> 
+                <img src="imagem2.jfif" alt="Vista de montanhas nevadas"> 
+                <img src="imagem3.jfif" alt="Trekking em paisagem desértica"> 
+            </div>
+        </div>
+
+        <!-- ===========================
+           DESTINOS
+        =========================== -->
+        <section id="destinos">
+            <h3>Destinos Recomendados</h3>
+            <p>Locais imperdíveis que recomendamos para sua próxima aventura.</p>
+
+            <div class="destinos-container">
+                <div class="card">
+                    <img src="imagem-destinos.jpg" alt="Mont Blanc">
+                    <h4>Mont Blanc</h4>
+                    <p>Paisagens épicas e trilhas intensas. Alpes (França/Itália)</p>
+                    <div class="card-info-hover">
+                        <strong>Mais detalhes:</strong><br>
+                        Trilhas avançadas, vistas panorâmicas, clima frio ideal para trekking.<br>
+                        Locais para camping, melhores épocas do ano, equipamentos recomendados.
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="imagem-destinos2.jpg" alt="Zanzibar">
+                    <h4>Zanzibar</h4>
+                    <p>Águas cristalinas e clima perfeito. Tanzânia</p>
+                    <div class="card-info-hover">
+                        <strong>Mais detalhes:</strong><br>
+                        Mergulho, snorkel, areia fina, pôr-do-sol incrível.<br>
+                        Hotéis próximos, dicas de segurança, passeios recomendados.
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="imagem-destinos3.jpg" alt="Parque Nacional de Fiordland">
+                    <h4>Parque Nacional de Fiordland</h4>
+                    <p>Natureza profunda e trilhas únicas. Nova Zelândia</p>
+                    <div class="card-info-hover">
+                        <strong>Mais detalhes:</strong><br>
+                        Trilhas fechadas, fauna rara, clima úmido.<br>
+                        Guias locais, melhores horários para visitação, precauções.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================== 
+            QUEM SOMOS - Corrigido para usar o layout de duas colunas
+         =========================== --> 
+        <section id="quem-somos">
+            <h3>Quem Somos</h3>
+            <div class="quem-somos-container">
+                <div class="quem-somos-texto">
+                    <p>Somos uma equipe de exploradores dedicados a descobrir o melhor que cada destino pode oferecer. A cada temporada,
+                        renovamos nossas recomendações com lugares que combinam com diferentes estilos de viagem: dos aventureiros aos
+                        que buscam conforto total. Com o foco no trekking, nosso trabalho é reconhecido mundialmente pela qualidade e
+                        honestidade das indicações, o que nos tornou o site de viagens mais famoso entre viajantes e exploradores de
+                        todos os cantos do planeta.</p>
+                    <p>Nossa missão é inspirar e equipar você para a sua próxima grande aventura. Acreditamos que a natureza é a maior
+                        professora e que cada trilha é uma oportunidade de autoconhecimento.</p>
+                </div>
+                <div class="quem-somos-imagens">
+                    <img src="imagem-quemsomos.jpg" alt="Equipe de trekking">
+                    <img src="imagem-quemsomos2.jpg" alt="Vista de montanha com pessoa">
+                </div>
+            </div>
+        </section>
+
+        <!-- ===========================
+            REVIEWS (Melhorado com novo estilo)
+        =========================== -->
+        <section id="reviews">
+            <h3>Reviews</h3>
+            <p>Veja as opiniões sobre destinos e experiências.</p>
+
+            <div class="review-card">
+                <strong>Mont Blanc:</strong> 
+                <p>Trilhas desafiadoras, vistas incríveis. A organização das dicas de equipamento foi essencial.</p>
+                <div class="rating">★★★★☆</div>
+            </div>
+            <div class="review-card">
+                <strong>Zanzibar:</strong> 
+                <p>Água cristalina, perfeito para relaxar. O guia de mergulho que vocês recomendaram foi excelente!</p>
+                <div class="rating">★★★★★</div>
+            </div>
+            <div class="review-card">
+                <strong>Parque Nacional de Fiordland:</strong> 
+                <p>Experiência única com a natureza. Um pouco úmido, mas valeu cada passo.</p>
+                <div class="rating">★★★★☆</div>
+            </div>
+        </section>
+        
+        <!-- ===========================
+           NOVA SEÇÃO: CONTATO
+        =========================== -->
+        <section id="contato">
+            <h3>Fale Conosco</h3>
+            <p>Tem alguma dúvida, sugestão ou quer compartilhar sua aventura? Envie uma mensagem!</p>
+            
+            <div class="contact-form-container">
+                <form action="#" method="POST">
+                    <label for="nome">Nome Completo</label>
+                    <input type="text" id="nome" name="nome" required>
+                    
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" required>
+                    
+                    <label for="assunto">Assunto</label>
+                    <input type="text" id="assunto" name="assunto">
+                    
+                    <label for="mensagem">Mensagem</label>
+                    <textarea id="mensagem" name="mensagem" required></textarea>
+                    
+                    <button type="submit">Enviar Mensagem</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- ===========================
+           REDES SOCIAIS (Melhorado com novo estilo)
+        =========================== -->
+        <section id="redes">
+            <h3>Redes Sociais</h3>
+            <p>Confira nossas aventuras, fotos e dicas diárias.</p>
+
+            <div class="review-card">
+                <strong>Instagram:</strong> @tendadoexplorador
+            </div>
+            <div class="review-card">
+                <strong>YouTube:</strong> Tenda do Explorador - Diário de Trekking
+            </div>
+            <div class="review-card">
+                <strong>Twitter:</strong> @tenda_do_explorador
+            </div>
+        </section>
+    </main>
+
+    <!-- ===========================
+       FOOTER
+    =========================== -->
+    <footer>
+        © 2025 Tenda do Explorador – Todos os direitos reservados.
+    </footer>
+
+</body>
+</html>
+
